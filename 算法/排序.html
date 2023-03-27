@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 1、冒泡排序： 从第一元素开始，相邻的两个元素比较，如果前者大于后者，则交换两者位置，直到所有的元素排列完成
+    const arr = [9, 4, 2, 6, 7, 8, 1, 5, 3];
+    const bubbleSort = (arr) => {
+      for (let i = 0; i < arr.length - 1; i++) {
+        for (let j = 0; j < arr.length - 1 - i; j++) {
+          let tmp;
+          if (arr[j] > arr[j + 1]) {
+            tmp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = tmp;
+          }
+        }
+      }
+      return arr;
+    };
+    // bubbleSort(arr);
+    // console.log(arr);
+    // 2、选择排序： 先拿第一个元素与剩下的元素对比，中选择出最小的元素，将它放到数组的第一个位置，再从剩下的元素中选择最小的，放到第二位置上，依次类推，直至所有元素排列完成
+    const selectionSort = (arr) => {
+      for (let i = 0; i < arr.length - 1; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[j] < arr[minIndex]) {
+            minIndex = j;
+          }
+        }
+        let tmp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = tmp;
+      }
+      return arr;
+    };
+    // console.log(selectionSort(arr));
+    // 3、插入排序：将数组分成已排序和未排序部分，将未排序的元素插入到已排序区间中去，直到所有的元素排序完成
+    const insertSort = (arr) => {
+      for (let i = 1; i < arr.length; i++) {
+        let j = i - 1;
+        let tmp = arr[i];
+        while (arr[j] > tmp && j >= 0) {
+          arr[j + 1] = arr[j];
+          j--;
+        }
+        arr[j + 1] = tmp;
+      }
+      return arr;
+    };
+    // console.log(insertSort(arr));
+
+    // 4、快速排序：
+  </script>
+</html>

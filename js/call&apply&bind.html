@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // call
+      Function.prototype.myCall = function (context, ...args) {
+        if (context === null) context = window;
+        if (typeof context !== "object") context = Object(context);
+        const symbol = Symbol();
+        context[symbol] = this;
+        try {
+          context[symbol](...args);
+        } finally {
+          delete context[symbol];
+        }
+      };
+      //   var foo = {
+      //     value: 1,
+      //   };
+      //   var bar = function (name, age) {
+      //     console.log(name, age);
+      //     console.log(this.value);
+      //   };
+      //   //   bar.myCall(foo, "www", 19);
+      //   bar("www", 19);
+
+      //   apply
+      Function.prototype.myApply = function (context, args) {
+        if (context === null) context = window;
+        if (typeof context !== "object") context = Object(context);
+        const symbol = Symbol();
+        context[symbol] = this;
+        try {
+          return context[symbol](...args);
+        } finally {
+          delete context[symbol];
+        }
+      };
+      //   var foo = {
+      //     value: 1,
+      //   };
+      //   var bar = function (name, age) {
+      //     console.log(name, age);
+      //     console.log(this.value);
+      //   };
+      //   bar.myApply(foo, ["www", 19]);
+
+      // bind
+      Function.prototype.myBind = function (context, ...args) {
+        if (typeof this !== "function") {
+          throw new TypeError("");
+        }
+        const self = this;
+        return function innerBind(...innerArgs) {
+          if (this instanceof innerBind) {
+            return new self(...args, ...innerArgs);
+          } else {
+            return self.apply(context, args.concat(innerArgs));
+          }
+        };
+      };
+      const person = {
+        name: "John",
+        age: 30,
+        greeting: function (message) {
+          console.log(
+            `${message}, my name is ${this.name} and I'm ${this.age} years old.`
+          );
+        },
+      };
+
+      const newContext = {
+        name: "Jane",
+        age: 25,
+      };
+
+      const boundFn = person.greeting.myBind(newContext, "Hello");
+      boundFn(); // 输出: Hello, my name is Jane and I'm 25 years old.
+    </script>
+  </body>
+</html>
